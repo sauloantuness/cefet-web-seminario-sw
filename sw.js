@@ -1,11 +1,12 @@
-var cacheName = 'my-app-v1';
+var cacheName = 'web-seminario-v1';
 
 var filesToCache = [
   '/',
   '/index.html',
   '/jquery-3.2.1.min.js',
   '/script.js',
-  '/style.css'
+  '/style.css',
+  '/images/logo.png'
 ];
 
 self.addEventListener('install', function(e) {
