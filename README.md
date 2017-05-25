@@ -21,7 +21,7 @@ Autor(es):
 
 Atribuições:
 
-- What Does Trump Think API[trump-api]
+- What Does Trump Think API [(link)][trump-api]
 
 [slides]: https://docs.google.com/presentation/d/1YBGf4-iLie3rTKR0Qk6wiZ3aoEg8TilgWSd4KzWNRK4/edit?usp=sharing
 [demo]: https://fegemo.github.io/cefet-web-weblot/apis/service-workers/
