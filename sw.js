@@ -11,27 +11,37 @@ var messages = [];
 self.addEventListener('fetch', function(e) {
   var dataUrl = 'https://api.whatdoestrumpthink.com';
 
-  if (e.request.url.indexOf(dataUrl) > -1 && !navigator.onLine ) {
-    var message = 'SW says: No quote for you!';
+  if (e.request.url.indexOf(dataUrl) > -1) {
 
-    if (messages.length)
-      message = messages[Math.floor(Math.random()*messages.length)];
+    if (!navigator.onLine) {
+      var message = 'SW says: No quote for you!';
 
-    e.respondWith(
-      new Response(JSON.stringify({message: message}), {
-        headers: { "Content-Type" : "application/json" }
-      })
-    );
-  } else {
-    e.respondWith(
-      fetch(e.request).then(function(response){
-        
-        response.clone().json().then(function(response) {
-          messages.push('CACHED: ' + response.message);
-        });
+      if (messages.length)
+        message = messages[Math.floor(Math.random()*messages.length)];
 
-        return response;
-      })
-    )
+      e.respondWith(
+        new Response(JSON.stringify({message: message}), {
+          headers: { "Content-Type" : "application/json" }
+        })
+      );
+    }
+    else {
+      e.respondWith(
+        fetch(e.request).then(function(response){
+          
+          response.clone().json().then(function(response) {
+            messages.push('CACHED: ' + response.message);
+          });
+
+          return response;
+        })
+      )
+    }
   }
+  else {
+    e.respondWith(
+      fetch(e.request)
+    );
+  }
+
 });
