@@ -1,32 +1,12 @@
-var cacheName = 'web-seminario-v1';
-
-var filesToCache = [
-  '/',
-  '/index.html',
-  '/jquery-3.2.1.min.js',
-  '/script.js',
-  '/style.css',
-  '/images/logo.png'
-];
-
 self.addEventListener('install', function(e) {
-  console.log('[ServiceWorker] Install');
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('[ServiceWorker] Caching app shell');
-      return cache.addAll(filesToCache);
-    })
-  );
+  console.log('Installing service worker.')
 });
 
-// var messages = JSON.parse(localStorage.getItem('messages'));
-var messages = [
-  'Quote cached 1',
-  'Quote cached 2',
-  'Quote cached 3',
-  'Quote cached 4',
-  'Quote cached 5'
-];
+self.addEventListener('activate', function(e) {
+  console.log('Activate service worker.')
+});
+
+var messages = [];
 
 self.addEventListener('fetch', function(e) {
   var dataUrl = 'https://api.whatdoestrumpthink.com';
@@ -44,7 +24,14 @@ self.addEventListener('fetch', function(e) {
     );
   } else {
     e.respondWith(
-      fetch(e.request)
-    );
+      fetch(e.request).then(function(response){
+        
+        response.clone().json().then(function(response) {
+          messages.push('CACHED: ' + response.message);
+        });
+
+        return response;
+      })
+    )
   }
 });

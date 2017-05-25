@@ -14,14 +14,7 @@ $('img').on('click', function() {
 		method: 'GET',
 		url: url,
 		success: function(response) {
-			
-			// var messages = JSON.parse(localStorage.getItem('messages'));
-			// messages.push(response.message);
-			// localStorage.setItem('messages', JSON.stringify(messages))
-
 			$('h1').html(response.message);
 		}
 	})
 })
-
-// localStorage.setItem('messages', '[]');
